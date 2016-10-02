@@ -85,6 +85,107 @@ namespace CraftsmanKata.UnitTests.TicTacToeKataTests
             areEqual.Should().BeTrue();
         }
 
+        [Test]
+        public void ReturnInProgress_GivenAGameHasntStarted()
+        {
+            var game = new TicTacToeGame();
+
+            var status = game.GetGameStatus();
+
+            status.Should().Be(GameStatus.InProgress);
+        }
+
+        [Test]
+        public void ResultInPlayerOneWinning_GivenTheirSymbolInEveryPositionInTheTopRow()
+        {
+            var game = new TicTacToeGame();
+            game.TakeTurn(Column.Left, Row.Top);
+            game.TakeTurn(Column.Left, Row.Center);
+            game.TakeTurn(Column.Middle, Row.Top);
+            game.TakeTurn(Column.Middle, Row.Bottom);
+            game.TakeTurn(Column.Right, Row.Top);
+
+            var winner = game.GetGameStatus();
+
+            winner.Should().Be(GameStatus.PlayerOneWinner);
+        }
+
+        [Test]
+        public void ResultInPlayerTwoWinning_GivenTheirSymbolInEveryPositionInTheTopRow()
+        {
+            var game = new TicTacToeGame();
+            game.TakeTurn(Column.Middle, Row.Bottom);
+            game.TakeTurn(Column.Left, Row.Top);
+            game.TakeTurn(Column.Left, Row.Center);
+            game.TakeTurn(Column.Middle, Row.Top);
+            game.TakeTurn(Column.Right, Row.Center);
+            game.TakeTurn(Column.Right, Row.Top);
+
+            var winner = game.GetGameStatus();
+
+            winner.Should().Be(GameStatus.PlayerTwoWinner);
+        }
+
+        [Test]
+        public void ResultInPlayerOneWinning_GivenTheirSymbolInEveryPositionInTheMiddleRow()
+        {
+            var game = new TicTacToeGame();
+            game.TakeTurn(Column.Left, Row.Center);
+            game.TakeTurn(Column.Left, Row.Bottom);
+            game.TakeTurn(Column.Middle, Row.Center);
+            game.TakeTurn(Column.Middle, Row.Bottom);
+            game.TakeTurn(Column.Right, Row.Center);
+
+            var winner = game.GetGameStatus();
+
+            winner.Should().Be(GameStatus.PlayerOneWinner);
+        }
+
+        [Test]
+        public void ResultInPlayerOneWinning_GivenTheirSymbolInEveryPositionInTheLeftColumn()
+        {
+            var game = new TicTacToeGame();
+            game.TakeTurn(Column.Left, Row.Center);
+            game.TakeTurn(Column.Middle, Row.Center);
+            game.TakeTurn(Column.Left, Row.Bottom);
+            game.TakeTurn(Column.Middle, Row.Bottom);
+            game.TakeTurn(Column.Left, Row.Top);
+
+            var winner = game.GetGameStatus();
+
+            winner.Should().Be(GameStatus.PlayerOneWinner);
+        }
+
+        [Test]
+        public void ResultInPlayerOneWinning_GivenTheirSymbolInEveryPositionOnTheDiagonal()
+        {
+            var game = new TicTacToeGame();
+            game.TakeTurn(Column.Left, Row.Top);
+            game.TakeTurn(Column.Left, Row.Bottom);
+            game.TakeTurn(Column.Middle, Row.Center);
+            game.TakeTurn(Column.Middle, Row.Bottom);
+            game.TakeTurn(Column.Right, Row.Bottom);
+
+            var winner = game.GetGameStatus();
+
+            winner.Should().Be(GameStatus.PlayerOneWinner);
+        }
+
+        [Test]
+        public void ResultInDraw_GivenNoWinningMoves()
+        {
+            var game = PlayCompleteGame();
+
+            var winner = game.GetGameStatus();
+
+            winner.Should().Be(GameStatus.Draw);
+        }
+
+        /// <summary>
+        /// XOX
+        /// OOX
+        /// XXO
+        /// </summary>
         private static TicTacToeGame PlayCompleteGame()
         {
             var game = new TicTacToeGame();
@@ -92,11 +193,11 @@ namespace CraftsmanKata.UnitTests.TicTacToeKataTests
             game.TakeTurn(Column.Middle, Row.Top);
             game.TakeTurn(Column.Right, Row.Top);
             game.TakeTurn(Column.Left, Row.Center);
-            game.TakeTurn(Column.Middle, Row.Center);
             game.TakeTurn(Column.Right, Row.Center);
+            game.TakeTurn(Column.Middle, Row.Center);
             game.TakeTurn(Column.Left, Row.Bottom);
-            game.TakeTurn(Column.Middle, Row.Bottom);
             game.TakeTurn(Column.Right, Row.Bottom);
+            game.TakeTurn(Column.Middle, Row.Bottom);
             return game;
         }
     }

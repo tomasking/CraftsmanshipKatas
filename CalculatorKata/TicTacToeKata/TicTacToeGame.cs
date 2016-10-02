@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace CraftsmanKata.TicTacToeKata
 {
@@ -12,15 +12,97 @@ namespace CraftsmanKata.TicTacToeKata
 
         public void TakeTurn(Column column, Row row)
         {
-            var currentSymbol = Symbol.X;
-            if (numberOfTurns %2 == 1)
-            {
-                currentSymbol = Symbol.O;
-            }
-
+            var currentSymbol = SelectCurrentSymbol();
             var turn = new Turn(column, row, currentSymbol);
             turnsTaken.Add(turn);
             numberOfTurns++;
+        }
+
+        public GameStatus GetGameStatus()
+        {
+            if (numberOfTurns == 9)
+            {
+                return GameStatus.Draw;
+            }
+            
+            if (IsWinningPlayer(Symbol.X))
+            {
+                return GameStatus.PlayerOneWinner;
+            }
+
+            if (IsWinningPlayer(Symbol.O))
+            {
+                return GameStatus.PlayerTwoWinner;
+            }
+
+            return GameStatus.InProgress;
+        }
+
+        private Symbol SelectCurrentSymbol()
+        {
+            var currentSymbol = Symbol.X;
+            if (numberOfTurns%2 == 1)
+            {
+                currentSymbol = Symbol.O;
+            }
+            return currentSymbol;
+        }
+
+        private bool IsWinningPlayer(Symbol symbol)
+        {
+            if (IsWinningRow(symbol) || IsWinningColumn(symbol) || IsWinningDiagonal(symbol))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsWinningRow(Symbol symbol)
+        {
+            foreach (var row in Enum.GetValues(typeof(Row)))
+            {
+                if (turnsTaken.Contains(new Turn(Column.Left, (Row)row, symbol))
+                    && turnsTaken.Contains(new Turn(Column.Middle, (Row)row, symbol))
+                    && turnsTaken.Contains(new Turn(Column.Right, (Row)row, symbol)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsWinningColumn(Symbol symbol)
+        {
+            foreach (var column in Enum.GetValues(typeof(Column)))
+            {
+                if (turnsTaken.Contains(new Turn((Column)column, Row.Top, symbol))
+                    && turnsTaken.Contains(new Turn((Column)column, Row.Center, symbol))
+                    && turnsTaken.Contains(new Turn((Column)column, Row.Bottom, symbol)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsWinningDiagonal(Symbol symbol)
+        {
+            if (!turnsTaken.Contains(new Turn(Column.Middle, Row.Center, symbol)))
+            {
+                return false;
+            }
+
+            if ((turnsTaken.Contains(new Turn(Column.Left, Row.Top, symbol))
+                && turnsTaken.Contains(new Turn(Column.Right, Row.Bottom, symbol))) ||
+                (turnsTaken.Contains(new Turn(Column.Right, Row.Top, symbol))
+                && turnsTaken.Contains(new Turn(Column.Left, Row.Bottom, symbol))))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         protected bool Equals(TicTacToeGame other)
@@ -44,26 +126,6 @@ namespace CraftsmanKata.TicTacToeKata
         public override int GetHashCode()
         {
             return (turnsTaken != null ? turnsTaken.GetHashCode() : 0);
-        }
-
-        private struct Turn
-        {
-            private readonly Column column;
-            private readonly Row row;
-            private readonly Symbol symbol;
-
-            public Turn(Column column, Row row, Symbol symbol)
-            {
-                this.column = column;
-                this.row = row;
-                this.symbol = symbol;
-            }
-        }
-
-        public enum Symbol
-        {
-            X,
-            O
         }
     }
 }

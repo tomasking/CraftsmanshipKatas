@@ -47,7 +47,10 @@
     <Compile Include="ArabicToRoman.cs" />
     <Compile Include="TicTacToeKata\Row.cs" />
     <Compile Include="TicTacToeKata\Column.cs" />
+    <Compile Include="TicTacToeKata\Symbol.cs" />
     <Compile Include="TicTacToeKata\TicTacToeGame.cs" />
+    <Compile Include="TicTacToeKata\GameStatus.cs" />
+    <Compile Include="TicTacToeKata\Turn.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
