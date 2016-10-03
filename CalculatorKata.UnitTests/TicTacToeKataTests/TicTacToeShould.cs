@@ -107,7 +107,7 @@ namespace CraftsmanKata.UnitTests.TicTacToeKataTests
 
             var winner = game.GetGameStatus();
 
-            winner.Should().Be(GameStatus.PlayerOneWinner);
+            winner.Should().Be(GameStatus.XWins);
         }
 
         [Test]
@@ -138,7 +138,7 @@ namespace CraftsmanKata.UnitTests.TicTacToeKataTests
 
             var winner = game.GetGameStatus();
 
-            winner.Should().Be(GameStatus.PlayerOneWinner);
+            winner.Should().Be(GameStatus.XWins);
         }
 
         [Test]
@@ -153,7 +153,7 @@ namespace CraftsmanKata.UnitTests.TicTacToeKataTests
 
             var winner = game.GetGameStatus();
 
-            winner.Should().Be(GameStatus.PlayerOneWinner);
+            winner.Should().Be(GameStatus.XWins);
         }
 
         [Test]
@@ -168,7 +168,7 @@ namespace CraftsmanKata.UnitTests.TicTacToeKataTests
 
             var winner = game.GetGameStatus();
 
-            winner.Should().Be(GameStatus.PlayerOneWinner);
+            winner.Should().Be(GameStatus.XWins);
         }
 
         [Test]

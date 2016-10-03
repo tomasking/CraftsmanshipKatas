@@ -2,7 +2,7 @@ namespace CraftsmanKata.TicTacToeKata
 {
     public enum GameStatus
     {
-        PlayerOneWinner,
+        XWins,
         InProgress,
         PlayerTwoWinner,
         Draw

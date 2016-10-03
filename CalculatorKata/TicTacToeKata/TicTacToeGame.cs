@@ -27,7 +27,7 @@ namespace CraftsmanKata.TicTacToeKata
             
             if (IsWinningPlayer(Symbol.X))
             {
-                return GameStatus.PlayerOneWinner;
+                return GameStatus.XWins;
             }
 
             if (IsWinningPlayer(Symbol.O))
@@ -63,7 +63,10 @@ namespace CraftsmanKata.TicTacToeKata
         {
             foreach (var row in Enum.GetValues(typeof(Row)))
             {
-                if (IsWinningRow(symbol, row)) return true;
+                if (IsWinningRow(symbol, row))
+                {
+                    return true;
+                }
             }
 
             return false;

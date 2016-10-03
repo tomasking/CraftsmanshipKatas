@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
-namespace CraftsmanKata
+namespace CraftsmanKata.RomanNumeralKata
 {
-    public class ArabicToRoman
+    public class ArabicToRoman2
     {
-        private readonly Dictionary<int, string> arabicToRoman = new Dictionary<int, string>()
+        private readonly Dictionary<int, string> romanToArabic = new Dictionary<int, string>()
         {
             {1000, "M"},
             {900, "CM"},
@@ -18,20 +18,25 @@ namespace CraftsmanKata
             {9, "IX"},
             {5, "V"},
             {4, "IV"},
-            {1, "I"},
+            {1, "I"}
         };
 
         public string Convert(int number)
         {
-            foreach (var pair in arabicToRoman)
+            string result = string.Empty;
+
+            foreach (var lookup in romanToArabic)
             {
-                if (number >= pair.Key)
+                while (number >= lookup.Key)
                 {
-                    return pair.Value + Convert(number - pair.Key);
+                    result += lookup.Value;
+                    number = number - lookup.Key;
                 }
             }
 
-            return string.Empty;
+            return result;
         }
     }
+
+
 }

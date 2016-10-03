@@ -1,7 +1,8 @@
-﻿using FluentAssertions;
+﻿using CraftsmanKata.BowlingGameKata;
+using FluentAssertions;
 using NUnit.Framework;
 
-namespace CraftsmanKata.UnitTests
+namespace CraftsmanKata.UnitTests.BowlingGameTests
 {
     [TestFixture]
     public class BowlingGameShould

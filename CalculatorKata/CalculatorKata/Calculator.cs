@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace CraftsmanKata
+namespace CraftsmanKata.CalculatorKata
 {
     public class Calculator
     {

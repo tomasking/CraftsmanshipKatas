@@ -1,4 +1,4 @@
-namespace CraftsmanKata
+namespace CraftsmanKata.BowlingGameKata
 {
     public class BowlingGame
     {

@@ -1,7 +1,8 @@
-﻿using FluentAssertions;
+﻿using CraftsmanKata.RomanNumeralKata;
+using FluentAssertions;
 using NUnit.Framework;
 
-namespace CraftsmanKata.UnitTests
+namespace CraftsmanKata.UnitTests.RomanNumeralTests
 {
     [TestFixture]
     public class ArabicToRomanShould
