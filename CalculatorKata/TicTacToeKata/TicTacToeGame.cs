@@ -6,7 +6,7 @@ namespace CraftsmanKata.TicTacToeKata
 {
     public class TicTacToeGame
     {
-        private int numberOfTurns = 0;
+        private int numberOfTurns;
 
         readonly IList<Turn> turnsTaken = new List<Turn>();
 
@@ -45,43 +45,59 @@ namespace CraftsmanKata.TicTacToeKata
             {
                 currentSymbol = Symbol.O;
             }
+
             return currentSymbol;
         }
 
         private bool IsWinningPlayer(Symbol symbol)
         {
-            if (IsWinningRow(symbol) || IsWinningColumn(symbol) || IsWinningDiagonal(symbol))
+            if (HasAWinningRow(symbol) || HasAWinningColumn(symbol) || IsWinningDiagonal(symbol))
             {
                 return true;
             }
+
             return false;
         }
 
-        private bool IsWinningRow(Symbol symbol)
+        private bool HasAWinningRow(Symbol symbol)
         {
             foreach (var row in Enum.GetValues(typeof(Row)))
             {
-                if (turnsTaken.Contains(new Turn(Column.Left, (Row)row, symbol))
-                    && turnsTaken.Contains(new Turn(Column.Middle, (Row)row, symbol))
-                    && turnsTaken.Contains(new Turn(Column.Right, (Row)row, symbol)))
-                {
-                    return true;
-                }
+                if (IsWinningRow(symbol, row)) return true;
             }
 
             return false;
         }
 
-        private bool IsWinningColumn(Symbol symbol)
+        private bool IsWinningRow(Symbol symbol, object row)
+        {
+            if (turnsTaken.Contains(new Turn(Column.Left, (Row) row, symbol))
+                && turnsTaken.Contains(new Turn(Column.Middle, (Row) row, symbol))
+                && turnsTaken.Contains(new Turn(Column.Right, (Row) row, symbol)))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool HasAWinningColumn(Symbol symbol)
         {
             foreach (var column in Enum.GetValues(typeof(Column)))
             {
-                if (turnsTaken.Contains(new Turn((Column)column, Row.Top, symbol))
-                    && turnsTaken.Contains(new Turn((Column)column, Row.Center, symbol))
-                    && turnsTaken.Contains(new Turn((Column)column, Row.Bottom, symbol)))
-                {
-                    return true;
-                }
+                if (IsWinningColumn(symbol, column)) return true;
+            }
+
+            return false;
+        }
+
+        private bool IsWinningColumn(Symbol symbol, object column)
+        {
+            if (turnsTaken.Contains(new Turn((Column) column, Row.Top, symbol))
+                && turnsTaken.Contains(new Turn((Column) column, Row.Center, symbol))
+                && turnsTaken.Contains(new Turn((Column) column, Row.Bottom, symbol)))
+            {
+                return true;
             }
 
             return false;

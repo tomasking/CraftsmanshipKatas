@@ -31,7 +31,7 @@ namespace CraftsmanKata.UnitTests.TicTacToeKataTests
         }
 
         [Test]
-        public void ResultInDifferentGames_GivenTheFirstGameHasHadOneGoAndTheSecondGameHasHAdTwoGoes()
+        public void ResultInDifferentGames_GivenTheFirstGameHasHadOneGoAndTheSecondGameHasHadTwoGoes()
         {
             var firstGame = new TicTacToeGame();
             var secondGame = new TicTacToeGame();

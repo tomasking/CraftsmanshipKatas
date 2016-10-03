@@ -43,6 +43,7 @@
     <Compile Include="ArabicToRoman2.cs" />
     <Compile Include="BowlingGame.cs" />
     <Compile Include="Calculator.cs" />
+    <Compile Include="GameOfLifeKata\GameOfLife.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ArabicToRoman.cs" />
     <Compile Include="TicTacToeKata\Row.cs" />

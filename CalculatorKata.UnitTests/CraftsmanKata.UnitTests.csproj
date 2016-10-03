@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="BowlingGameShould.cs" />
     <Compile Include="CalculatorShould.cs" />
+    <Compile Include="GameOfLifeTests\GameOfLifeShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ArabicToRomanShould.cs" />
     <Compile Include="TicTacToeKataTests\TicTacToeShould.cs" />
