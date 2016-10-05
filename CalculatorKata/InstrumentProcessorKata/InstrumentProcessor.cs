@@ -12,21 +12,19 @@ namespace CraftsmanKata.InstrumentProcessorKata
             this.taskDispatcher = taskDispatcher;
             this.instrument = instrument;
         }
-
+        
         public void Process()
         {
             string task = taskDispatcher.GetTask();
-
-            Console.WriteLine(task);
-            
-            try
-            {
-                //instrument.Finished += InstrumentOnFinished(task);
+            try { 
+                instrument.Error += InstrumentOnError();
+                instrument.Finished += InstrumentOnFinished(task);
                 instrument.Execute(task);
             }
             finally
             {
-                //instrument.Finished -= InstrumentOnFinished(task);
+                instrument.Error += InstrumentOnError();
+                instrument.Finished -= InstrumentOnFinished(task);
             }
         }
 
@@ -35,6 +33,14 @@ namespace CraftsmanKata.InstrumentProcessorKata
             return (_, __) =>
             {
                 taskDispatcher.FinishedTask(task);
+            };
+        }
+
+        private EventHandler InstrumentOnError()
+        {
+            return (_, __) =>
+            {
+                Console.WriteLine("Error occured"); // TODO: to be able to test this, needs to be wrapped in another mockable class
             };
         }
     }
