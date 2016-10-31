@@ -56,6 +56,7 @@
     <Compile Include="CalculatorTests\CalculatorShould.cs" />
     <Compile Include="GameOfLifeTests\GameOfLifeShould.cs" />
     <Compile Include="InstrumentProcessorTests\InstrumentProcessorShould.cs" />
+    <Compile Include="MarsRoverTests\MarsRoverShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RomanNumeralTests\ArabicToRomanShould.cs" />
     <Compile Include="TicTacToeKataTests\TicTacToeShould.cs" />

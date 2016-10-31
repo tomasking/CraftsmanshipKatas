@@ -39,6 +39,11 @@
     <Compile Include="InstrumentProcessorKata\IInstrumentProcessor.cs" />
     <Compile Include="InstrumentProcessorKata\InstrumentProcessor.cs" />
     <Compile Include="InstrumentProcessorKata\ITaskDispatcher.cs" />
+    <Compile Include="InstrumentProcessorKata\TaskEventArgs.cs" />
+    <Compile Include="MarsRover\Coordinates.cs" />
+    <Compile Include="MarsRover\Directions.cs" />
+    <Compile Include="MarsRover\IDirections.cs" />
+    <Compile Include="MarsRover\MarsRover.cs" />
     <Compile Include="RomanNumeralKata\ArabicToRoman2.cs" />
     <Compile Include="BowlingGameKata\BowlingGame.cs" />
     <Compile Include="CalculatorKata\Calculator.cs" />

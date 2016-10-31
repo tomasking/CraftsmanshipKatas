@@ -2,7 +2,7 @@
 
 namespace CraftsmanKata.InstrumentProcessorKata
 {
-    public class InstrumentProcessor 
+    public class InstrumentProcessor : IDisposable
     {
         private readonly ITaskDispatcher taskDispatcher;
         private readonly IInstrument instrument;
@@ -11,37 +11,30 @@ namespace CraftsmanKata.InstrumentProcessorKata
         {
             this.taskDispatcher = taskDispatcher;
             this.instrument = instrument;
+            instrument.Error += InstrumentOnError;
+            instrument.Finished += InstrumentOnFinished;
         }
         
         public void Process()
         {
             string task = taskDispatcher.GetTask();
-            try { 
-                instrument.Error += InstrumentOnError();
-                instrument.Finished += InstrumentOnFinished(task);
-                instrument.Execute(task);
-            }
-            finally
-            {
-                instrument.Error += InstrumentOnError();
-                instrument.Finished -= InstrumentOnFinished(task);
-            }
+            instrument.Execute(task);
         }
 
-        private EventHandler InstrumentOnFinished(string task)
+        private void InstrumentOnFinished(object sender, EventArgs taskEventArgs)
         {
-            return (_, __) =>
-            {
-                taskDispatcher.FinishedTask(task);
-            };
+             taskDispatcher.FinishedTask(((TaskEventArgs)taskEventArgs).Task);
         }
 
-        private EventHandler InstrumentOnError()
+        private void InstrumentOnError(object sender, EventArgs taskEventArgs)
         {
-            return (_, __) =>
-            {
-                Console.WriteLine("Error occured"); // TODO: to be able to test this, needs to be wrapped in another mockable class
-            };
+            Console.WriteLine("Error occured"); // TODO: to be able to test this, needs to be wrapped in another mockable class
+        }
+
+        public void Dispose()
+        {
+            instrument.Error -= InstrumentOnError;
+            instrument.Finished -= InstrumentOnFinished;
         }
     }
 }

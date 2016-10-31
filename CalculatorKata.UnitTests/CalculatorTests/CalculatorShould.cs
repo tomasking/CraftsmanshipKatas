@@ -2,7 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace CraftsmanKata.UnitTests.BowlingGameTests
+namespace CraftsmanKata.UnitTests.CalculatorTests
 {
     [TestFixture]
     public class CalculatorShould

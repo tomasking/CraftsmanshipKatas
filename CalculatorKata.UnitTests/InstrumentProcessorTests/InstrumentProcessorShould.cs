@@ -41,10 +41,12 @@ namespace CraftsmanKata.UnitTests.InstrumentProcessorTests
         [Test]
         public void FireFinishedEvent_WhenProcessCompletesSuccessfully()
         {
-            instrument.WhenForAnyArgs(i => i.Execute(Arg.Any<string>())).Do(
+            string taskName = "task1";
+            taskDispatcher.GetTask().Returns(taskName);
+            instrument.WhenForAnyArgs(i => i.Execute(taskName)).Do(
                 _ =>
                     {
-                        instrument.Finished += Raise.EventWith(this, EventArgs.Empty);
+                        instrument.Finished += Raise.EventWith(this, new TaskEventArgs(taskName));
                     });
             var finishedEventWasRaised = false;
             instrument.Finished += (sender, args) => finishedEventWasRaised = true;
@@ -57,16 +59,17 @@ namespace CraftsmanKata.UnitTests.InstrumentProcessorTests
         [Test]
         public void CallTaskDispatchersFinishedTask_WhenProcessCompletesSuccessfully()
         {
-            instrument.WhenForAnyArgs(i => i.Execute(Arg.Any<string>())).Do(
+            string taskName = "task1";
+            instrument.WhenForAnyArgs(i => i.Execute(taskName)).Do(
                 _ =>
                 {
-                    instrument.Finished += Raise.EventWith(this, EventArgs.Empty);
+                    instrument.Finished += Raise.EventWith(this, new TaskEventArgs(taskName));
                 });
-            taskDispatcher.GetTask().Returns("task1");
+            taskDispatcher.GetTask().Returns(taskName);
 
             instrumentProcessor.Process();
 
-            taskDispatcher.Received().FinishedTask("task1");
+            taskDispatcher.Received().FinishedTask(taskName);
         }
 
         [Test]
@@ -82,6 +85,5 @@ namespace CraftsmanKata.UnitTests.InstrumentProcessorTests
               .ShouldThrow<Exception>()
               .WithMessage("BOOM");
         }
-    }
-}
+    }}
 
