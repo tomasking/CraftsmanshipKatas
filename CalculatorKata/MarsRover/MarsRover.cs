@@ -1,77 +1,45 @@
-﻿using System.Linq;
-
-namespace CraftsmanKata.MarsRover
+﻿namespace CraftsmanKata.MarsRover
 {
     public class MarsRover
     {
-        private readonly IDirections directions;
+        private readonly IDirection direction;
+        private readonly IMovement movement;
 
-        public MarsRover(IDirections directions)
+        public MarsRover(IDirection direction, IMovement movement)
         {
-            this.directions = directions;
+            this.direction = direction;
+            this.movement = movement;
         }
 
         public string Explore(string upperRightBoundary, string startingPosition, string movements)
         {
             var currentCoordinates = Coordinates.StartingCoordinates(startingPosition);
-            var currentDirection = StartingDirection(startingPosition);
+            var currentDirection = Direction.StartingDirection(startingPosition);
 
-            foreach (var movement in movements)
+            foreach (var moves in movements)
             {
-                if (movement == 'L')
+                if (moves == Movement.Left)
                 {
-                    currentDirection = directions.TurnLeft(currentDirection);
+                    currentDirection = direction.TurnLeft(currentDirection);
                 }
 
-                if (movement == 'R')
+                if (moves == Movement.Right)
                 {
-                    currentDirection = directions.TurnRight(currentDirection);
+                    currentDirection = direction.TurnRight(currentDirection);
                 }
 
-                if (movement == 'M')
+                if (moves == Movement.Move)
                 {
-                    currentCoordinates = Move(currentCoordinates, currentDirection);
+                    movement.MoveForward(currentCoordinates, currentDirection);
                 }
             }
             
-            return EndingPosition(currentCoordinates.X, currentCoordinates.Y, currentDirection);
+            return FormatEndingPosition(currentCoordinates.X, currentCoordinates.Y, currentDirection);
         }
 
-        private Coordinates Move(Coordinates currentCoordinates, string currentDirection)
-        {
-            int x = currentCoordinates.X;
-            int y = currentCoordinates.Y;
-            if (currentDirection == Directions.North)
-            {
-                y = y + 1;
-            }
-
-            if (currentDirection == Directions.South)
-            {
-                y = y - 1;
-            }
-
-            if (currentDirection == Directions.East)
-            {
-                x = x + 1;
-            }
-
-            if (currentDirection == Directions.West)
-            {
-                x = x - 1;
-            }
-
-            return new Coordinates(x, y);
-        }
-
-        private static string EndingPosition(int x, int y, string finalDirection)
+        private static string FormatEndingPosition(int x, int y, string finalDirection)
         {
             return $"{x} {y} {finalDirection}";
-        }
-        
-        private static string StartingDirection(string startingPosition)
-        {
-            return startingPosition.Split(' ').Last();
         }
     }
 }

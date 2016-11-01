@@ -12,7 +12,7 @@ namespace CraftsmanKata.UnitTests.MarsRoverTests
         [SetUp]
         public void Setup()
         {
-            _marsRover = new MarsRover.MarsRover(new Directions());
+            _marsRover = new MarsRover.MarsRover(new Direction());
         }
 
         [TestCase("0 0 N")]

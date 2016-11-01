@@ -2,11 +2,11 @@
 
 namespace CraftsmanKata.MarsRover
 {
-    internal struct Coordinates
+    public class Coordinates
     {
-        public int X { get; }
+        public int X { get; private set; }
 
-        public int Y { get; }
+        public int Y { get; private set; }
 
         public Coordinates(int x, int y)
         {
@@ -21,6 +21,26 @@ namespace CraftsmanKata.MarsRover
             var startingCoordinatesY = Int32.Parse(startingPositionParts[1]);
 
             return new Coordinates(startingCoordinatesX, startingCoordinatesY);
+        }
+
+        public void MoveNorth()
+        {
+            Y = Y + 1;
+        }
+
+        public void MoveSouth()
+        {
+            Y = Y - 1;
+        }
+
+        public void MoveEast()
+        {
+            X = X + 1;
+        }
+
+        public void MoveWest()
+        {
+            X = X - 1;
         }
     }
 }
